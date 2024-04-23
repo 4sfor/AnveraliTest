@@ -1,15 +1,9 @@
-from django.shortcuts import render
 from django.contrib.auth import login, logout
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.template import loader
 from django.urls import reverse_lazy
-from django.views import View
-from django.views.generic import CreateView, UpdateView
 from .forms import *
 from .models import *
-from .serv import *
+from .serv import change_user_info
 from django.contrib.auth.views import LoginView
 
 
@@ -17,7 +11,7 @@ from django.contrib.auth.views import LoginView
 def index(request):
     if request.user.is_authenticated:
         user_cat = UserProfile.objects.get(user_id=request.user.pk)
-        print(user_cat.cat_user_id)
+
         context = {'cat': user_cat.cat_user_id}
         return render(request, 'mainapp/index.html', context)
     return render(request, 'mainapp/index.html')
@@ -76,14 +70,14 @@ def profile_worker(request):
     change_profile_form = ChangeUserProfileForm()
     change_user_info(request)
     context = {'user_info': user_info, 'user_profile': user_profile, 'title': 'Профиль', 'user_exp': user_exp,
-               'change_user_form': change_user_form, 'change_profile_form': change_profile_form,}
+               'change_user_form': change_user_form, 'change_profile_form': change_profile_form, }
     return render(request, 'mainapp/profile_worker.html', context)
 
 
 def exp_add(request):
     user_exp_form = ExperienceForm()
     if request.method == 'POST':
-        user_exp_form = ExperienceForm(request.POST,)
+        user_exp_form = ExperienceForm(request.POST, )
         if user_exp_form.is_valid():
             user = request.user.pk
             exp = user_exp_form.save(commit=False)
@@ -95,8 +89,6 @@ def exp_add(request):
 
 def delete_exp(request):
     if request.method == 'POST':
-        print(request.POST)
         record_id = request.POST.get('record_id')
-        print(record_id)
         Experience.objects.filter(id=record_id).delete()
     return redirect('profile_worker')

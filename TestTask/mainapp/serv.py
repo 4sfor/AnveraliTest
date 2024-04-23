@@ -15,5 +15,3 @@ def change_user_info(request):
             if user_fields:
                 User.objects.filter(pk=request.user.pk).update(**user_fields)
             profile_form.save()
-
-
