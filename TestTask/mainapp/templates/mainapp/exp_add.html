@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+<div class="exp_pl">
+<div>
+</div>
+<div id="exp_form" >
+    <form method="post">
+    {% csrf_token %}
+    {{ user_exp_form.non_field_errors }}
+    <div class="form-group">
+        {{ user_exp_form.place_work.errors }}
+        <label for="{{ user_exp_form.place_work.id_for_label }}">Место работы:</label>
+        {{ user_exp_form.place_work }}
+    </div>
+    <div class="form-group">
+        {{ user_exp_form.position.errors }}
+        <label for="{{ user_exp_form.position.id_for_label }}">Должность:</label>
+        {{ user_exp_form.position }}
+    </div>
+    <div class="form-group">
+        {{ user_exp_form.time_start.errors }}
+        <label for="{{ user_exp_form.time_start.id_for_label }}">Работал/а с:</label>
+        {{ user_exp_form.time_start }}
+    </div>
+    <div class="form-group">
+        {{ user_exp_form.time_end.errors }}
+        <label for="{{ user_exp_form.time_end.id_for_label }}">Работал/а по:</label>
+        {{ user_exp_form.time_end }}
+    </div>
+    <button id="save_exp" type="submit">Сохранить</button>
+</form>
+
+    <a id="out_exp" href="{% url 'profile_worker' %}">Назад</a>
+
+</div>
+</div>
+{% endblock %}
+
+
+
+
+

@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'TestTask/style.css' %}">
+</head>
+<body class="reg">
+    <div class="form">
+        <h1>{{ title }}</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form_error">{{ user_form.non_field_errors }}</div>
+            {% for elem in form %}
+            <div class="inputbox">
+                {{ elem }}
+                <span for="{{ elem.id_for_label }}">{{ elem.label }}</span>
+            </div>
+            <div class="form-error">{{ elem.errors }}</div>
+            {% endfor %}
+            <button class="inputbox" type="submit">Войти</button>
+        </form>
+    <a href="{% url 'password_reset' %}">Забыли пароль</a>
+    </div>
+</body>
+</html>

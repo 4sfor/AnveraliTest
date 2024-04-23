@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'TestTask/style.css' %}">
+</head>
+<body class="reg">
+    <div class="form">
+        <h1>{{ title }}</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form_error">{{ user_form.non_field_errors }}</div>
+            {% for elem in user_form %}
+            <div class="inputbox">
+                {{ elem }}
+                <span for="{{ elem.id_for_label }}">{{ elem.label }}</span>
+                {{ elem.errors }}
+            </div>
+            <div class="form-error">{{ elem.errors }}</div>
+            {% endfor %}
+
+            <!-- Отображение элементов второй формы -->
+            {{ profile_form.as_p }}
+
+
+
+            <button class="inputbox" type="submit">Регистрация</button>
+        </form>
+
+    </div>
+</body>
+</html>

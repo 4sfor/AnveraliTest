@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="{% static 'TestTask/jquery-3.7.1.min.js' %}" defer></script>
+    <script src="{% static 'TestTask/scripts.js' %}" defer></script>
+    <link rel="stylesheet", type="text/css", href="{% static 'TestTask/style.css' %}">
+</head>
+<body>
+<div class="wrapper">
+    <div class="navbar">
+    <div class="menu">
+        <a href="{% url 'index' %}">Дизайн</a>
+        <a href="{% url 'index' %}">Разработка</a>
+        <a href="{% url 'index' %}">Тексты и перевод</a>
+        <a href="{% url 'index' %}">Соцсети и реклама</a>
+        <a href="{% url 'index' %}">SEO и реклама</a>
+    </div>
+    <div class="auth">
+        {% if request.user.is_authenticated %}
+            {% if cat == 1 %}
+                <a href="{% url 'profile_employer' %}">Профиль</a>
+            {% else %}
+                <a href="{% url 'profile_worker' %}">Профиль</a>
+            {% endif %}
+        <a href="{% url 'logout' %}">Выход</a>
+        {% else %}
+         <a href="{% url 'login' %}">Вход</a>
+         <a href="{% url 'registration' %}">Регистрация</a>
+        {% endif %}
+    </div>
+    </div>
+{% block content %}
+{% endblock %}
+</div>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+{% extends 'profile_base.html' %}
+{% block for_child %}
+<div class="exp_pl">
+    <a id="addExp" href="{% url 'exp_add' %}">Добавить информацию об опыте работы</a>
+    <div class="exp_work">
+        {% for elem in user_exp %}
+            <div>
+                {{ elem.place_work }}
+                {{ elem.position }}
+                {{ elem.time_start }}
+                {{ elem.time_end }}
+                <form method="post" action="{% url 'delete_exp' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="record_id" value="{{ elem.id }}">
+                    <button id="delete_exp" type="submit">Удалить</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
